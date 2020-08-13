@@ -49,8 +49,11 @@ fi
 
 lxq_is_set "${ARG_TEMPLATE_NAME+x}" || lxq_panic "No template name specified."
 
-# TODO: Attach to the template and install xorg and openbox. We should probably
-#       detect if the template is running or not, and attach to it using the
-#       appropriate method (lxc-attach or lxc-exec)
+# TODO: Start template if needed
+
+lxq template exec "${ARG_TEMPLATE_NAME}" -- "apt update && apt install xorg openbox --yes"
+
+# TODO: If we started the template above, we should also stop it.
+
 # TODO: Somehow "mark" the template as having been configured, so our
 #       post-start hooks can know when to automatically launch openbox
