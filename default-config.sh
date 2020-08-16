@@ -5,4 +5,4 @@ set -Eeuo pipefail
 # called "user-config.sh" and re-export the environment variables you want
 # to override.
 
-# This file is just a placeholder for now.
+export LXQ_OPENBOX_CONFIG_FILE="99_openbox.conf"

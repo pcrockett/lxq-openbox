@@ -49,11 +49,19 @@ fi
 
 lxq_is_set "${ARG_TEMPLATE_NAME+x}" || lxq_panic "No template name specified."
 
-# TODO: Start template if needed
+config_dir="${LXQ_REPO_DIR}/templates/${ARG_TEMPLATE_NAME}/config.d"
+test -d "${config_dir}" || lxq_panic "Template \"${ARG_TEMPLATE_NAME}\" does not exist."
+
+config_file="${config_dir}/${LXQ_OPENBOX_CONFIG_FILE}"
+test ! -f "${config_file}" || lxq_panic "Template \"${ARG_TEMPLATE_NAME}\" has already been initialized for Openbox."
+
+original_template_status=$(lxq template status "${ARG_TEMPLATE_NAME}")
+test "${original_template_status}" == "RUNNING" || lxq template start "${ARG_TEMPLATE_NAME}"
 
 lxq template exec "${ARG_TEMPLATE_NAME}" -- "apt update && apt install xorg openbox --yes"
 
-# TODO: If we started the template above, we should also stop it.
+if [ "${original_template_status}" == "STOPPED" ]; then
+    lxq template stop "${ARG_TEMPLATE_NAME}"
+fi
 
-# TODO: Somehow "mark" the template as having been configured, so our
-#       post-start hooks can know when to automatically launch openbox
+echo "# This template has been configured for Openbox" > "${config_file}"
