@@ -7,6 +7,11 @@ if lxq_is_set "${LXQ_SHORT_SUMMARY+x}"; then
     exit 0
 fi
 
+readonly SCRIPT_DIR=$(dirname "$(readlink -f "${0}")")
+
+# shellcheck source=/dev/null
+. "${SCRIPT_DIR}/_util.sh"
+
 declare -A LXQ_SUBCOMMANDS
 lxq_populate_subcommands "/lxq-openbox-([a-z]+)\\.sh$"
 
