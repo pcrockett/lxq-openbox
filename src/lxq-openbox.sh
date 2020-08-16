@@ -57,8 +57,8 @@ parse_commandline "$@"
 
 if lxq_is_set "${LXQ_COMMAND+x}"; then
 
-    default_config="${LXQ_XEPH_REPO_DIR}/default-config.sh"
-    user_config="${LXQ_XEPH_REPO_DIR}/user-config.sh"
+    default_config="${LXQ_OPENBOX_REPO_DIR}/default-config.sh"
+    user_config="${LXQ_OPENBOX_REPO_DIR}/user-config.sh"
 
     # shellcheck source=/dev/null
     . "${default_config}"
